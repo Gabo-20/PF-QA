@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a09" />
+  <title>Ventas · Zorros Revolution Biker</title>
+  <link rel="icon" href="/assets/ZORROS%20LOGO.svg" type="image/svg+xml" />
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="app-page">
+<a class="skip-link" href="#main-content">Saltar al contenido</a>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="Navegación principal">
+    <a class="sidebar-brand" href="/dashboard.html" aria-label="Zorros Revolution Biker, inicio">
+      <span class="brand-logo-wrap"><img class="brand-logo" src="/assets/ZORROS%20LOGO.svg" alt="" /></span>
+      <span class="brand-copy"><strong>Zorros Revolution</strong><small>Predictive Engine</small></span>
+    </a>
+    <span class="nav-section-label">Operación</span>
+    <nav class="sidebar-nav" aria-label="Módulos">
+      <a href="/dashboard.html" data-nav="dashboard"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-dashboard"></use></svg><span class="nav-label">Dashboard</span></a>
+      <a href="/ventas.html" data-nav="ventas"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-receipt"></use></svg><span class="nav-label">Ventas</span></a>
+      <a href="/productos.html" data-nav="productos"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-package"></use></svg><span class="nav-label">Productos</span></a>
+      <a href="/predicciones.html" data-nav="predicciones" data-roles="admin"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-predictions"></use></svg><span class="nav-label">Predicciones</span></a>
+      <a href="/usuarios.html" data-nav="usuarios" data-roles="admin"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-users"></use></svg><span class="nav-label">Usuarios</span></a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-summary"><span class="user-avatar" id="user-initial" aria-hidden="true">Z</span><span class="user-copy"><strong id="nombre-usuario">Cargando</strong><small id="rol-usuario">Sesión activa</small></span></div>
+      <div class="sidebar-user-actions"><button type="button" class="btn-icon" data-theme-toggle aria-label="Activar modo claro"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-sun"></use></svg></button><button type="button" id="btn-logout" class="btn-icon" title="Cerrar sesión" aria-label="Cerrar sesión"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-log-out"></use></svg></button></div>
+    </div>
+  </aside>
+
+  <main class="main-content" id="main-content">
+    <header class="topbar">
+      <div>
+        <p class="page-kicker">Operación comercial</p>
+        <h1>Registro de ventas</h1>
+        <p>Consulta el movimiento del negocio y registra nuevas transacciones.</p>
+      </div>
+      <button type="button" class="btn btn-primary" id="btn-nueva-venta"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-plus"></use></svg><span>Nueva venta</span></button>
+    </header>
+
+    <section class="panel table-panel" aria-labelledby="ventas-heading">
+      <header class="panel-header">
+        <div class="panel-title-wrap"><span class="panel-title-icon"><svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons.svg#icon-receipt"></use></svg></span><div><h2 id="ventas-heading">Historial de transacciones</h2><span class="panel-eyebrow">Últimos 100 registros</span></div></div>
+      </header>
+      <div class="table-responsive">
+        <table class="data-table">
+          <caption>Historial de ventas registradas</caption>
+          <thead><tr><th scope="col">Número</th><th scope="col">Fecha</th><th scope="col">Cajero</th><th scope="col">Productos</th><th scope="col">Total</th><th scope="col">Pago</th></tr></thead>
+          <tbody id="tabla-ventas" aria-live="polite" aria-busy="true">
+            <tr class="loading-row"><td colspan="6"><div class="skeleton-stack" aria-label="Cargando ventas"><span class="skeleton skeleton-line"></span><span class="skeleton skeleton-line"></span><span class="skeleton skeleton-line skeleton-line-short"></span></div></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="modal-overlay" id="modal-venta" aria-labelledby="modal-venta-title" hidden>
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modal-venta-title">Nueva venta</h2>
+      <button type="button" class="btn-icon" id="btn-cerrar-modal" data-modal-close title="Cerrar" aria-label="Cerrar nueva venta"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-close"></use></svg></button>
+    </div>
+    <form id="form-venta" novalidate>
+      <div id="items-venta"></div>
+      <p id="venta-status" class="sr-only" role="status" aria-live="polite"></p>
+      <button type="button" class="btn btn-ghost" id="btn-agregar-item"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-plus"></use></svg><span>Agregar producto</span></button>
+
+      <label for="metodo-pago">Método de pago</label>
+      <select id="metodo-pago">
+        <option>Efectivo</option><option>Tarjeta</option><option>Transferencia</option><option>Crédito</option>
+      </select>
+
+      <p id="venta-error" class="form-error" role="alert" aria-live="assertive" hidden></p>
+      <button type="submit" class="btn btn-primary btn-block" id="btn-registrar-venta"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-check"></use></svg><span>Registrar venta</span></button>
+    </form>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/ventas.js"></script>
+</body>
+</html>

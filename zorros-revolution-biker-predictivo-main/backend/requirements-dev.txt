@@ -1,0 +1,10 @@
+# Dependencias solo para desarrollo y pruebas.
+# NO se instalan en la imagen de producción (ver Dockerfile, que usa requirements.txt).
+#
+#   pip install -r requirements-dev.txt
+#   pytest
+
+-r requirements.txt
+
+pytest==8.3.3
+httpx==0.27.2          # necesario para fastapi.testclient

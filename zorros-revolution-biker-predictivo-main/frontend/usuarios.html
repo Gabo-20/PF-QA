@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a09" />
+  <title>Usuarios · Zorros Revolution Biker</title>
+  <link rel="icon" href="/assets/ZORROS%20LOGO.svg" type="image/svg+xml" />
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="app-page">
+<a class="skip-link" href="#main-content">Saltar al contenido</a>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="Navegación principal">
+    <a class="sidebar-brand" href="/dashboard.html" aria-label="Zorros Revolution Biker, inicio">
+      <span class="brand-logo-wrap"><img class="brand-logo" src="/assets/ZORROS%20LOGO.svg" alt="" /></span>
+      <span class="brand-copy"><strong>Zorros Revolution</strong><small>Predictive Engine</small></span>
+    </a>
+    <span class="nav-section-label">Operación</span>
+    <nav class="sidebar-nav" aria-label="Módulos">
+      <a href="/dashboard.html" data-nav="dashboard"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-dashboard"></use></svg><span class="nav-label">Dashboard</span></a>
+      <a href="/ventas.html" data-nav="ventas"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-receipt"></use></svg><span class="nav-label">Ventas</span></a>
+      <a href="/productos.html" data-nav="productos"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-package"></use></svg><span class="nav-label">Productos</span></a>
+      <a href="/predicciones.html" data-nav="predicciones" data-roles="admin"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-predictions"></use></svg><span class="nav-label">Predicciones</span></a>
+      <a href="/usuarios.html" data-nav="usuarios" data-roles="admin"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-users"></use></svg><span class="nav-label">Usuarios</span></a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-summary"><span class="user-avatar" id="user-initial" aria-hidden="true">Z</span><span class="user-copy"><strong id="nombre-usuario">Cargando</strong><small id="rol-usuario">Sesión activa</small></span></div>
+      <div class="sidebar-user-actions"><button type="button" class="btn-icon" data-theme-toggle aria-label="Activar modo claro"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-sun"></use></svg></button><button type="button" id="btn-logout" class="btn-icon" title="Cerrar sesión" aria-label="Cerrar sesión"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-log-out"></use></svg></button></div>
+    </div>
+  </aside>
+
+  <main class="main-content" id="main-content">
+    <header class="topbar">
+      <div>
+        <p class="page-kicker">Administración</p>
+        <h1>Usuarios y roles</h1>
+        <p>Gestiona accesos, permisos y credenciales del equipo.</p>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-ghost" id="btn-mi-password"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-key"></use></svg><span>Mi contraseña</span></button>
+        <button type="button" class="btn btn-primary" id="btn-nuevo-usuario"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-user-plus"></use></svg><span>Nuevo usuario</span></button>
+      </div>
+    </header>
+
+    <section class="kpi-grid kpi-grid-3" aria-label="Resumen de usuarios">
+      <article class="kpi-card kpi-primary">
+        <div class="kpi-head"><span class="kpi-label">Total usuarios</span><span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-users"></use></svg></span></div>
+        <span class="kpi-value" id="kpi-total"><span class="skeleton skeleton-value" aria-label="Cargando"></span></span><span class="kpi-delta">Cuentas registradas</span>
+      </article>
+      <article class="kpi-card">
+        <div class="kpi-head"><span class="kpi-label">Administradores</span><span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-shield"></use></svg></span></div>
+        <span class="kpi-value" id="kpi-admins"><span class="skeleton skeleton-value" aria-label="Cargando"></span></span><span class="kpi-delta">Con acceso completo</span>
+      </article>
+      <article class="kpi-card kpi-warning">
+        <div class="kpi-head"><span class="kpi-label">Inactivos</span><span class="kpi-icon"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-alert"></use></svg></span></div>
+        <span class="kpi-value" id="kpi-inactivos"><span class="skeleton skeleton-value" aria-label="Cargando"></span></span><span class="kpi-delta">Sin acceso al sistema</span>
+      </article>
+    </section>
+
+    <section class="panel table-panel" aria-labelledby="cuentas-heading">
+      <header class="panel-header"><div class="panel-title-wrap"><span class="panel-title-icon"><svg class="icon icon-sm" aria-hidden="true"><use href="/assets/icons.svg#icon-users"></use></svg></span><div><h2 id="cuentas-heading">Cuentas registradas</h2><span class="panel-eyebrow">Permisos y estado de acceso</span></div></div></header>
+      <div class="table-responsive">
+        <table class="data-table">
+          <caption>Usuarios, roles, estado y acciones disponibles</caption>
+          <thead><tr><th scope="col">Nombre</th><th scope="col">Correo</th><th scope="col">Rol</th><th scope="col">Estado</th><th scope="col">Acciones</th></tr></thead>
+          <tbody id="tabla-usuarios" aria-live="polite" aria-busy="true"><tr class="loading-row"><td colspan="5"><div class="skeleton-stack" aria-label="Cargando usuarios"><span class="skeleton skeleton-line"></span><span class="skeleton skeleton-line"></span><span class="skeleton skeleton-line skeleton-line-short"></span></div></td></tr></tbody>
+        </table>
+      </div>
+      <p id="aviso" class="form-error" role="alert" aria-live="assertive" hidden></p>
+    </section>
+  </main>
+</div>
+
+<div class="modal-overlay" id="modal-usuario" aria-labelledby="modal-usuario-title" hidden>
+  <div class="modal">
+    <div class="modal-header"><h2 id="modal-usuario-title">Nuevo usuario</h2><button type="button" class="btn-icon" id="cerrar-modal-usuario" data-modal-close title="Cerrar" aria-label="Cerrar nuevo usuario"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-close"></use></svg></button></div>
+    <form id="form-usuario">
+      <label for="u-nombre">Nombre</label><input type="text" id="u-nombre" required minlength="2" autocomplete="name" />
+      <label for="u-email">Correo</label><input type="email" id="u-email" required autocomplete="off" inputmode="email" />
+      <label for="u-rol">Rol</label><select id="u-rol"><option value="cajero">Cajero — registra ventas y recibe stock</option><option value="admin">Administrador — acceso total</option></select>
+      <label for="u-password">Contraseña</label>
+      <div class="input-with-action"><input type="password" id="u-password" required autocomplete="new-password" /><button type="button" class="btn-icon" data-password-toggle="u-password" aria-label="Mostrar contraseña"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-eye"></use></svg></button></div>
+      <small class="form-hint">Mínimo 10 caracteres, con al menos una letra y un número.</small>
+      <p id="usuario-error" class="form-error" role="alert" aria-live="assertive" hidden></p>
+      <button type="submit" class="btn btn-primary btn-block" id="btn-crear-usuario"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-user-plus"></use></svg><span>Crear usuario</span></button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-reset" aria-labelledby="modal-reset-title" hidden>
+  <div class="modal">
+    <div class="modal-header"><h2 id="modal-reset-title">Restablecer contraseña</h2><button type="button" class="btn-icon" id="cerrar-modal-reset" data-modal-close title="Cerrar" aria-label="Cerrar restablecimiento"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-close"></use></svg></button></div>
+    <form id="form-reset">
+      <p class="kpi-label">Cuenta: <strong id="reset-destino">Pendiente</strong></p>
+      <label for="reset-password">Contraseña nueva</label>
+      <div class="input-with-action"><input type="password" id="reset-password" required autocomplete="new-password" /><button type="button" class="btn-icon" data-password-toggle="reset-password" aria-label="Mostrar contraseña"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-eye"></use></svg></button></div>
+      <small class="form-hint">Mínimo 10 caracteres, con al menos una letra y un número.</small>
+      <p id="reset-error" class="form-error" role="alert" aria-live="assertive" hidden></p>
+      <button type="submit" class="btn btn-primary btn-block" id="btn-restablecer-password"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-key"></use></svg><span>Restablecer contraseña</span></button>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-mi-password" aria-labelledby="modal-mi-password-title" hidden>
+  <div class="modal">
+    <div class="modal-header"><h2 id="modal-mi-password-title">Cambiar mi contraseña</h2><button type="button" class="btn-icon" id="cerrar-modal-mi-password" data-modal-close title="Cerrar" aria-label="Cerrar cambio de contraseña"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-close"></use></svg></button></div>
+    <form id="form-mi-password">
+      <label for="mi-actual">Contraseña actual</label>
+      <div class="input-with-action"><input type="password" id="mi-actual" required autocomplete="current-password" /><button type="button" class="btn-icon" data-password-toggle="mi-actual" aria-label="Mostrar contraseña"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-eye"></use></svg></button></div>
+      <label for="mi-nueva">Contraseña nueva</label>
+      <div class="input-with-action"><input type="password" id="mi-nueva" required autocomplete="new-password" /><button type="button" class="btn-icon" data-password-toggle="mi-nueva" aria-label="Mostrar contraseña"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-eye"></use></svg></button></div>
+      <small class="form-hint">Mínimo 10 caracteres, con al menos una letra y un número.</small>
+      <p id="mi-password-error" class="form-error" role="alert" aria-live="assertive" hidden></p>
+      <button type="submit" class="btn btn-primary btn-block" id="btn-cambiar-password"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-key"></use></svg><span>Cambiar contraseña</span></button>
+    </form>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/usuarios.js"></script>
+</body>
+</html>

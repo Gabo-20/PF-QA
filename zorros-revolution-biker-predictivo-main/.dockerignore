@@ -1,0 +1,23 @@
+.git
+.gitignore
+.claude
+
+# Entornos y cachés locales
+backend/venv/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# Base de datos y artefactos locales: en producción viven en volúmenes
+backend/zorros.db
+backend/app/ml/artifacts/
+
+# Secretos: el .env se inyecta por compose, nunca se copia a la imagen
+.env
+backend/.env
+
+# Documentación y despliegue: no hacen falta dentro de la imagen
+docs/
+deploy/
+README.md
+*.log

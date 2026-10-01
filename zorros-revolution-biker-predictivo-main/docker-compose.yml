@@ -1,0 +1,52 @@
+# Stack de la aplicación. Nginx NO va aquí: el VPS ya tiene uno en el host
+# sirviendo otros proyectos, así que este stack solo expone la API en
+# 127.0.0.1:8020 y el Nginx del host hace de proxy hacia ese puerto.
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-zorros}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?define POSTGRES_PASSWORD en el .env}
+      POSTGRES_DB: ${POSTGRES_DB:-zorros}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    # Sin puertos publicados: solo la API la alcanza por la red interna.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-zorros} -d ${POSTGRES_DB:-zorros}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    mem_limit: 384m
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-zorros}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-zorros}
+      SECRET_KEY: ${SECRET_KEY:?define SECRET_KEY en el .env}
+      ACCESS_TOKEN_EXPIRE_MINUTES: ${ACCESS_TOKEN_EXPIRE_MINUTES:-720}
+      CORS_ORIGINS: ${CORS_ORIGINS:-https://prediccionzrb.duckdns.org}
+      ARTIFACTS_DIR: /var/lib/zorros/artifacts
+      GUNICORN_WORKERS: ${GUNICORN_WORKERS:-2}
+      LEAD_TIME_DEFAULT_DIAS: ${LEAD_TIME_DEFAULT_DIAS:-60}
+      DIAS_SEGURIDAD_STOCK: ${DIAS_SEGURIDAD_STOCK:-10}
+    volumes:
+      # El modelo entrenado debe sobrevivir a `up --build`; si vive dentro de la
+      # imagen, cada redespliegue lo borra y la app cae al fallback heurístico.
+      - model_artifacts:/var/lib/zorros/artifacts
+    ports:
+      # Solo loopback: la exposición pública la da el Nginx del host.
+      - "127.0.0.1:8020:8000"
+    mem_limit: 1g
+
+volumes:
+  pgdata:
+  model_artifacts:

@@ -1,0 +1,12 @@
+backend/venv/
+backend/__pycache__/
+backend/app/__pycache__/
+backend/app/**/__pycache__/
+backend/app/ml/artifacts/*.joblib
+backend/zorros.db
+backend/.env
+.env
+*.pyc
+*.log
+.DS_Store
+.claude/

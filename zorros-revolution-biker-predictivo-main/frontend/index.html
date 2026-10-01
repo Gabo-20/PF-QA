@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0a0a09" />
+  <title>Iniciar sesión · Zorros Revolution Biker</title>
+  <link rel="icon" href="/assets/ZORROS%20LOGO.svg" type="image/svg+xml" />
+  <script src="/js/theme-init.js"></script>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body class="login-page">
+  <main class="login-shell" aria-labelledby="login-title">
+    <section class="login-visual" aria-label="Zorros Revolution Biker">
+      <img class="login-logo" src="/assets/ZORROS%20LOGO.svg" alt="Zorros Revolution Biker" fetchpriority="high" />
+      <div class="login-visual-copy">
+        <span>Inteligencia para inventario</span>
+        <h1>Decisiones más rápidas. Menos stock detenido.</h1>
+        <p>Ventas, inventario y predicción reunidos en un centro de control diseñado para operar el negocio con precisión.</p>
+      </div>
+      <div class="login-status"><span class="status-dot" aria-hidden="true"></span>Sistema operativo</div>
+    </section>
+
+    <section class="login-card">
+      <button type="button" class="btn-icon login-theme-toggle" data-theme-toggle aria-label="Activar modo claro"><svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-sun"></use></svg></button>
+      <img class="mobile-login-logo" src="/assets/ZORROS%20LOGO.svg" alt="Zorros Revolution Biker" />
+      <p class="page-kicker">Acceso seguro</p>
+      <h2 id="login-title">Bienvenido</h2>
+      <p class="login-sub">Ingresa al centro predictivo de ventas e inventario.</p>
+
+      <form id="form-login">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" required autocomplete="username" inputmode="email" placeholder="nombre@empresa.com" autofocus />
+
+        <label for="password">Contraseña</label>
+        <div class="input-with-action">
+          <input type="password" id="password" required autocomplete="current-password" placeholder="Ingresa tu contraseña" />
+          <button type="button" class="btn-icon" data-password-toggle="password" aria-label="Mostrar contraseña">
+            <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-eye"></use></svg>
+          </button>
+        </div>
+
+        <p id="login-error" class="form-error" role="alert" aria-live="assertive" hidden></p>
+
+        <button type="submit" class="btn btn-primary btn-block" id="btn-login">
+          <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-lock"></use></svg>
+          <span>Ingresar al sistema</span>
+        </button>
+      </form>
+
+      <p class="security-note">
+        <svg class="icon" aria-hidden="true"><use href="/assets/icons.svg#icon-shield"></use></svg>
+        Sesión protegida y credenciales cifradas.
+      </p>
+    </section>
+  </main>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/ui.js"></script>
+  <script src="/js/auth.js"></script>
+</body>
+</html>
